@@ -6,20 +6,15 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { MenuIcon } from "lucide-react";
-import {
-  RegisterLink,
-  LoginLink,
-  LogoutLink,
-} from "@kinde-oss/kinde-auth-nextjs/components";
+import { SignInButton, SignUpButton, SignOutButton } from "@clerk/nextjs";
 
 import React from "react";
-import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
+import { currentUser } from "@clerk/nextjs/server";
 import Link from "next/link";
 import { createAirbnbnHome } from "../actions";
 
 async function UserNav() {
-  const { getUser } = getKindeServerSession();
-  const user = await getUser();
+  const user = await currentUser();
 
   const createHomeWithId = createAirbnbnHome.bind(null, {
     userId: user?.id as string,
@@ -32,8 +27,8 @@ async function UserNav() {
           <MenuIcon className="w-6 h-6 lg:w-5 lg:h-5" />
           <img
             src={
-              user?.picture
-                ? user.picture
+              user?.imageUrl
+                ? user.imageUrl
                 : "https://static.vecteezy.com/system/resources/previews/009/292/244/non_2x/default-avatar-icon-of-social-media-user-vector.jpg"
             }
             alt="Image of the user"
@@ -68,16 +63,22 @@ async function UserNav() {
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem>
-              <LogoutLink className="w-full">Logout</LogoutLink>
+              <SignOutButton>
+                <button className="w-full text-start">Logout</button>
+              </SignOutButton>
             </DropdownMenuItem>
           </>
         ) : (
           <>
             <DropdownMenuItem>
-              <RegisterLink className="w-full">Register</RegisterLink>
+              <SignUpButton mode="modal">
+                <button className="w-full text-start">Register</button>
+              </SignUpButton>
             </DropdownMenuItem>
             <DropdownMenuItem>
-              <LoginLink className="w-full">Login</LoginLink>
+              <SignInButton mode="modal">
+                <button className="w-full text-start">Login</button>
+              </SignInButton>
             </DropdownMenuItem>
           </>
         )}

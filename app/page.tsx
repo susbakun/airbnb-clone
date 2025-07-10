@@ -4,7 +4,7 @@ import { MapFilterItems } from "./components/MapFilterItems";
 import { prisma } from "./lib/prisma";
 import SkeletonCard from "./components/SkeletonCard";
 import NoItem from "./components/NoItem";
-import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
+import { currentUser } from "@clerk/nextjs/server";
 import { unstable_noStore as noStore } from "next/cache";
 
 async function getData({
@@ -83,8 +83,7 @@ async function ShowItems({
     bathroom?: string;
   };
 }) {
-  const { getUser } = getKindeServerSession();
-  const user = await getUser();
+  const user = await currentUser();
   const data = await getData({ searchParams, userId: user?.id });
 
   return (

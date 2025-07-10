@@ -1,4 +1,4 @@
-import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
+import { currentUser } from "@clerk/nextjs/server";
 import { ListingCard } from "../components/ListingCard";
 import NoItem from "../components/NoItem";
 import { prisma } from "../lib/prisma";
@@ -32,9 +32,8 @@ async function getData(userId: string) {
 }
 
 export default async function ReservationsRoute() {
-  const { getUser } = getKindeServerSession();
-  const user = await getUser();
-  if (!user) return redirect("/api/auth/login");
+  const user = await currentUser();
+  if (!user) return redirect("/sign-in");
 
   const data = await getData(user.id);
   return (

@@ -7,7 +7,7 @@ import { ReservationSubmitButton } from "@/app/components/SubmitButtons";
 import { prisma } from "@/app/lib/prisma";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
+import { currentUser } from "@clerk/nextjs/server";
 import Image from "next/image";
 import Link from "next/link";
 import { unstable_noStore as noStore } from "next/cache";
@@ -53,8 +53,7 @@ export default async function HomeRoute({
   const { id } = await params;
   const data = await getData(id);
 
-  const { getUser } = getKindeServerSession();
-  const user = await getUser();
+  const user = await currentUser();
 
   return (
     <div className="w-[75%] mx-auto mt-10 mb-12">
@@ -105,7 +104,7 @@ export default async function HomeRoute({
             <ReservationSubmitButton />
           ) : (
             <Button className="w-full">
-              <Link href="/api/auth/login">Make a Reservation</Link>
+              <Link href="/sign-in">Make a Reservation</Link>
             </Button>
           )}
         </form>
