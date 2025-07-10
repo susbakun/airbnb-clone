@@ -2,7 +2,13 @@ import { createCategoryPage } from "@/app/actions";
 import CreationButtonBar from "@/app/components/CreationButtonBar";
 import SelectCategory from "@/app/components/SelectCategory";
 
-export default function StructureRoute({ params }: { params: { id: string } }) {
+export default async function StructureRoute({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
+  const { id } = await params;
+
   return (
     <>
       <div className="w-3/5 mx-auto">
@@ -11,7 +17,7 @@ export default function StructureRoute({ params }: { params: { id: string } }) {
         </h2>
       </div>
       <form action={createCategoryPage}>
-        <input type="hidden" name="homeId" value={params.id} />
+        <input type="hidden" name="homeId" value={id} />
         <SelectCategory />
         <CreationButtonBar />
       </form>

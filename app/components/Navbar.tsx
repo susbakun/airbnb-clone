@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, { Suspense } from "react";
 import DesktopLogo from "@/public/airbnb-desktop.png";
 import MobileLogo from "@/public/airbnb-mobile.webp";
 import UserNav from "./UserNav";
@@ -21,10 +21,21 @@ function Navbar() {
           className="block lg:hidden w-12"
         />
       </Link>
-      <SearchModalComponent />
+      <Suspense
+        fallback={
+          <div className="rounded-full py-2 px-5 border flex items-center">
+            <div className="flex h-full divide-x font-medium">
+              <p className="px-4">Anywhere</p>
+              <p className="px-4">Any week</p>
+              <p className="px-4">Any Guests</p>
+            </div>
+          </div>
+        }
+      >
+        <SearchModalComponent />
+      </Suspense>
       <UserNav />
     </nav>
   );
 }
-
 export default Navbar;
