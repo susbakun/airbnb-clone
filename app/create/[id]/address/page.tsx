@@ -14,14 +14,11 @@ import {
 } from "@/components/ui/select";
 import { Skeleton } from "@/components/ui/skeleton";
 import dynamic from "next/dynamic";
-import { use, useState } from "react";
+import { useParams } from "next/navigation";
+import { useState } from "react";
 
-export default function AddressRoute({
-  params,
-}: {
-  params: Promise<{ id: string }>;
-}) {
-  const { id } = use(params);
+export default function AddressRoute() {
+  const { id } = useParams();
   const [locationValue, setLocationValue] = useState("");
 
   const { getAllCountries } = useCountries();
