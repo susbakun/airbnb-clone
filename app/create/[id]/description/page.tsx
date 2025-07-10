@@ -5,12 +5,11 @@ import { Card, CardHeader } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { useParams } from "next/navigation";
 
-export default function DescriptionPage({
-  params,
-}: {
-  params: { id: string };
-}) {
+export default function DescriptionPage() {
+  const { id } = useParams();
+
   return (
     <>
       <div className="w-3/5 mx-auto">
@@ -19,7 +18,7 @@ export default function DescriptionPage({
         </h2>
       </div>
       <form action={createDescription}>
-        <input type="hidden" name="homeId" value={params.id} />
+        <input type="hidden" name="homeId" value={id} />
         <div className="mx-auto w-3/5 mt-10 flex flex-col gap-y-5 mb-36">
           <div className="flex flex-col gap-y-2">
             <Label>Title</Label>
