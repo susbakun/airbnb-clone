@@ -14,9 +14,14 @@ import {
 } from "@/components/ui/select";
 import { Skeleton } from "@/components/ui/skeleton";
 import dynamic from "next/dynamic";
-import { useState } from "react";
+import { use, useState } from "react";
 
-export default function AddressRoute({ params }: { params: { id: string } }) {
+export default function AddressRoute({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
+  const { id } = use(params);
   const [locationValue, setLocationValue] = useState("");
 
   const { getAllCountries } = useCountries();
@@ -34,7 +39,7 @@ export default function AddressRoute({ params }: { params: { id: string } }) {
       </div>
 
       <form action={createLocation}>
-        <input type="hidden" name="homeId" value={params.id} />
+        <input type="hidden" name="homeId" value={id} />
         <input type="hidden" name="countryValue" value={locationValue} />
         <div className="w-3/5 mx-auto mb-36">
           <div className="mb-5">
