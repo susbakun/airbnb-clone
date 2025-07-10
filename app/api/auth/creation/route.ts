@@ -2,7 +2,7 @@ import { prisma } from "@/app/lib/prisma";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { NextResponse } from "next/server";
 
-export async function GET(request: Request) {
+export async function GET() {
   const { getUser } = getKindeServerSession();
   const user = await getUser();
 
@@ -28,9 +28,5 @@ export async function GET(request: Request) {
     });
   }
 
-  // Get the origin from the request headers to ensure we redirect to the correct domain
-  const url = new URL(request.url);
-  const baseUrl = `${url.protocol}//${url.host}`;
-
-  return NextResponse.redirect(baseUrl);
+  return NextResponse.redirect(process.env.KINDE_SITE_URL as string);
 }
