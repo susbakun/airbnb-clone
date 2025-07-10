@@ -29,7 +29,5 @@ export async function GET() {
     });
   }
 
-  return NextResponse.redirect(
-    "https://airbnb-clone-n3ubw4end-amirsaars-projects.vercel.app/"
-  );
+  return NextResponse.redirect("https://airbnb-clone-cxfn.vercel.app/");
 }
