@@ -1,11 +1,8 @@
 import { createCategoryPage } from "@/app/actions";
 import CreationButtonBar from "@/app/components/CreationButtonBar";
 import SelectCategory from "@/app/components/SelectCategory";
-import { useParams } from "next/navigation";
 
-export default function StructureRoute() {
-  const { id } = useParams();
-
+export default function StructureRoute({ params }: { params: { id: string } }) {
   return (
     <>
       <div className="w-3/5 mx-auto">
@@ -14,7 +11,7 @@ export default function StructureRoute() {
         </h2>
       </div>
       <form action={createCategoryPage}>
-        <input type="hidden" name="homeId" value={id} />
+        <input type="hidden" name="homeId" value={params.id} />
         <SelectCategory />
         <CreationButtonBar />
       </form>
