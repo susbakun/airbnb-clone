@@ -2,7 +2,7 @@ import { prisma } from "@/app/lib/prisma";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { NextResponse } from "next/server";
 
-export async function GET() {
+export async function GET(request: Request) {
   const { getUser } = getKindeServerSession();
   const user = await getUser();
 
@@ -28,5 +28,9 @@ export async function GET() {
     });
   }
 
-  return NextResponse.redirect("http://localhost:3000");
+  // Get the origin from the request headers to ensure we redirect to the correct domain
+  const url = new URL(request.url);
+  const baseUrl = `${url.protocol}//${url.host}`;
+
+  return NextResponse.redirect(baseUrl);
 }
